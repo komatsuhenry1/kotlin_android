@@ -3,19 +3,21 @@ package br.com.alura.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.orgs.R
+import br.com.alura.orgs.databinding.ActivityListaProdutosBinding
 import br.com.alura.orgs.ui.dao.ProdutosDao
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos) {
+class ListaProdutosActivity : AppCompatActivity() {
 
     val dao = ProdutosDao()
     private val adapter= ListaProdutosAdapter(context = this, produtos = dao.buscaTodos())
+    private val binding by lazy {
+        ActivityListaProdutosBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         ConfiguraRecyclerView()
     }
 
@@ -29,8 +31,9 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
     }
 
     private fun configuraFab() {
-        val fab =
-            findViewById<FloatingActionButton>(R.id.acivity_lista_produtos_floatingActionButton) // passando a referencia pelo id do xml para a variavel fab (floatingactionbutton)
+        val fab = binding.acivityListaProdutosFloatingActionButton
+//        val fab =
+//            findViewById<FloatingActionButton>(R.id.acivity_lista_produtos_floatingActionButton) // passando a referencia pelo id do xml para a variavel fab (floatingactionbutton)
         fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
@@ -47,7 +50,8 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
     }
 
     private fun ConfiguraRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.acivity_lista_produtos_recyclerView)
+        val recyclerView = binding.acivityListaProdutosRecyclerView
+        //val recyclerView = findViewById<RecyclerView>(R.id.acivity_lista_produtos_recyclerView)
         recyclerView.adapter = adapter
     }
 }

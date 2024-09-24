@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.orgs.R
+import br.com.alura.orgs.databinding.ProdutoItemBinding
 import br.com.alura.orgs.ui.model.Produtos
 
 class ListaProdutosAdapter(
@@ -16,14 +17,15 @@ class ListaProdutosAdapter(
 
     private val produtos =  produtos.toMutableList()
 
-    class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val binding: ProdutoItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun vincula(produto: Produtos) {
-            val nome = itemView.findViewById<TextView>(R.id.activity_formulario_produto_nome)
+            val nome = binding.activityFormularioProdutoNome
             nome.text = produto.nome
-            val descricao = itemView.findViewById<TextView>(R.id.activity_formulario_produto_descricao)
+            val descricao = binding.activityFormularioProdutoDescricao
             descricao.text = produto.descricao
-            val valor = itemView.findViewById<TextView>(R.id.activity_formulario_produto_valor)
+            val valor = binding.activityFormularioProdutoValor
             valor.text = produto.valor.toPlainString()
         }
     }
@@ -32,8 +34,10 @@ class ListaProdutosAdapter(
     //essa view é passada para o viewHolder, e o viewHolder é passado para a recycler view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { // separa cada item da recyler view em um ViewHolder
         val inflater = LayoutInflater.from(context) // Layout inflatter tranforma o layout em uma View
-        val view = inflater.inflate(R.layout.produto_item, parent, false) // val view recebe o layout de produto_item e transforma o xml em uma view
-        return ViewHolder(view) // retorna para a viewHolder, o produto_item.xml como uma view
+        val binding = ProdutoItemBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
+//        val view = inflater.inflate(R.layout.produto_item, parent, false) // val view recebe o layout de produto_item e transforma o xml em uma view
+//        return ViewHolder(view) // retorna para a viewHolder, o produto_item.xml como uma view
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {  // indica qual viewHolder estamos, qual item da lista estamos localizados e o que faremos com esta informaçao
