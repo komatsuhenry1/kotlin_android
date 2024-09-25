@@ -2,7 +2,9 @@ package br.com.alura.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import br.com.alura.orgs.R
 import br.com.alura.orgs.databinding.ActivityListaProdutosBinding
 import br.com.alura.orgs.ui.dao.ProdutosDao
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
@@ -19,6 +21,13 @@ class ListaProdutosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         ConfiguraRecyclerView()
+        AlertDialog.Builder(this) //classe interna do androidx // argumento precisa ser um context em que sera apresentado
+            .setTitle("titulo de tesste") // titulo da caixa
+            .setMessage("Mensagem de teste") //mensagem da caixa
+            .setView(R.layout.formulario_imagem) // seta uma view ou layout para para Dialog(caixa)
+            .setNegativeButton("Cancelar") { _, _ -> } //argumentos da funcao lambda nao foram definidos
+            .setPositiveButton("Confirmar") { _, _ -> } // "_" sao os parametros dialog e which, dialog = defina uma acao posterior / which(int), define qual botao foi clicado
+            .show() // mostra o "dialog" (fundo meio escuro)
     }
 
 

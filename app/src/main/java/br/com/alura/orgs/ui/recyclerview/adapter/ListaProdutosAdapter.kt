@@ -2,13 +2,12 @@ package br.com.alura.orgs.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.orgs.R
 import br.com.alura.orgs.databinding.ProdutoItemBinding
 import br.com.alura.orgs.ui.model.Produtos
+import java.math.BigDecimal
+import java.text.NumberFormat
 
 class ListaProdutosAdapter(
     private val context : Context,
@@ -20,13 +19,20 @@ class ListaProdutosAdapter(
     class ViewHolder(private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+            //funcao que associa nome, descricao e valor do layout para a classe "Produtos"
         fun vincula(produto: Produtos) {
-            val nome = binding.activityFormularioProdutoNome
+            val nome = binding.produtoItemNome
             nome.text = produto.nome
             val descricao = binding.activityFormularioProdutoDescricao
             descricao.text = produto.descricao
             val valor = binding.activityFormularioProdutoValor
-            valor.text = produto.valor.toPlainString()
+                val valorEmMoeda: String = formataParaReal(produto.valor) //retorna uma string com o valor formatado por conta do "formatador"
+                valor.text = valorEmMoeda
+        }
+
+        private fun formataParaReal(valor:BigDecimal): String {
+            val formatador: NumberFormat = NumberFormat.getCurrencyInstance() // api java que pega o valor em moeda de acordo com a localidade (moeda passada como argumento atraves da linguagem e país)
+            return formatador.format(valor)
         }
     }
 
